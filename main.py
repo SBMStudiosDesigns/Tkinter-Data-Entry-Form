@@ -1,24 +1,31 @@
 # Imports ---------------------------------------------------
 import tkinter
 from tkinter import ttk
+from tkinter import messagebox
 
 
 # Functions ---------------------------------------------------
 def enter_data():
-    fname = fname_entry.get()
-    lname = lname_entry.get()
-    ntitle = name_title_combo.get()
-    age = age_spinbox.get()
-    nationality = nationality_combobox.get()
-    courses = numcourses_spinbox.get()
-    semesters = numsemesters_spinbox.get()
-    r_status = reg_status_strvar.get()
+    accepted = conditions_var
+    
+    if accepted == "Accepted":
+        fname = fname_entry.get()
+        lname = lname_entry.get()
+        ntitle = name_title_combo.get()
+        age = age_spinbox.get()
+        nationality = nationality_combobox.get()
+        courses = numcourses_spinbox.get()
+        semesters = numsemesters_spinbox.get()
+        r_status = reg_status_strvar.get()
 
 
-    print("First Name: ", fname, "Last Name: ", lname)
-    print("Title: ", ntitle, "Age: ", age, "Nationality: ", nationality)
-    print("Registration Status: ", r_status, "# of Courses: ", courses, "# of Semesters: ", semesters)
-    print("--------------------------------------------------------")
+        print("First Name: ", fname, "Last Name: ", lname)
+        print("Title: ", ntitle, "Age: ", age, "Nationality: ", nationality)
+        print("Registration Status: ", r_status, "# of Courses: ", courses, "# of Semesters: ", semesters)
+        print("--------------------------------------------------------")
+    else:
+        print("Incorrect/No data entered")
+        messagebox.showerror("showerror","Error. Enter data to display results")
 
 # Window Initialized ----------------------------------------
 window = tkinter.Tk()
@@ -110,8 +117,12 @@ for widget in courses_frame.winfo_children():
 # 3rd Frame ------------------------------------------------------
 terms_frame = tkinter.LabelFrame(frame, text="Terms & Conditions")
 terms_frame.grid(row=2, column=0, sticky="news", padx=20, pady=10)
-
-conditions_checkbox = tkinter.Checkbutton(terms_frame, text="I accept the terms and conditions")
+conditions_var = tkinter.StringVar(value="Not Accepted")
+conditions_checkbox = tkinter.Checkbutton(terms_frame, 
+                                          text="I accept the terms and conditions",
+                                          variable=conditions_var,
+                                          onvalue="Accepted",
+                                          offvalue="Not Accepted")
 conditions_checkbox.grid(row=0, column=0)
 
 
