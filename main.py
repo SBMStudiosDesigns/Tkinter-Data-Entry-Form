@@ -2,25 +2,29 @@
 import tkinter
 from tkinter import ttk
 from tkinter import messagebox
-import os 
 import openpyxl
+import os 
+
 
 
 # Functions ---------------------------------------------------
 def enter_data():
     accepted = conditions_var.get()
     
+    # if terms are accepted
     if accepted == "Accepted":
+        # take name data
         fname = fname_entry.get()
         lname = lname_entry.get()   
 
+        # if name is string
         if fname and lname:       
             ntitle = name_title_combo.get()
             age = age_spinbox.get()
             nationality = nationality_combobox.get()
             courses = numcourses_spinbox.get()
             semesters = numsemesters_spinbox.get()
-            r_status = reg_status_strvar.get()
+            r_status = reg_status.get()
 
 
             print("First Name: ", fname, "Last Name: ", lname)
@@ -28,13 +32,45 @@ def enter_data():
             print("Registration Status: ", r_status, "# of Courses: ", courses, "# of Semesters: ", semesters)
             print("--------------------------------------------------------")
 
-            filepath = 'C:\\Users\\tahne\\OneDrive\\Desktop\\coding projects\\Tkinter Data Entry Form\\data.xlsx'
+            # create filepath variable
+            # 'D:\Directory\Current Folder\excel-sheet.xlsx
+            filepath = r'C:\Users\tahne\OneDrive\Desktop\coding projects\Tkinter Data Entry Form\data.xlsx'
 
+            # if no excel datasheet
             if not os.path.exists(filepath):
+                # workbook initialized
                 workbook = openpyxl.Workbook()
+                # workbook sheet initialized
                 sheet = workbook.active
-                heading = ["First Name", "Last Name", "Title", "Age", "Nationality", "# Courses", "# Semesters", "Registration Status"]
-                sheet.append(heading)
+                # create sheet heading 
+                headings = ["First Name", 
+                           "Last Name", 
+                           "Title", 
+                           "Age", 
+                           "Nationality", 
+                           "# Courses", 
+                           "# Semesters", 
+                           "Registration Status"]
+                # save sheet headings
+                sheet.append(headings)
+                # save workbook
+                workbook.save(filepath)
+            
+            # open data excel workbook
+            workbook = openpyxl.load_workbook(filepath)
+            # open sheet
+            sheet = workbook.active
+            # save entered data
+            sheet.append([fname, 
+                          lname, 
+                          ntitle, 
+                          age, 
+                          nationality, 
+                          courses, 
+                          semesters, 
+                          r_status])
+            # save new entry
+            workbook.save(filepath)
 
         else:
             print("Error: First and last name not inputted.")
@@ -85,7 +121,8 @@ age_label = tkinter.Label(user_info_frame,
                           text="Age")
 age_label.grid(row=2, column=0)
 age_spinbox = tkinter.Spinbox(user_info_frame, 
-                              from_=19, to=95)
+                              from_=19, 
+                              to=95)
 age_spinbox.grid(row=3, column=0)
 
 nationality_label = tkinter.Label(user_info_frame, 
@@ -108,22 +145,20 @@ courses_frame.grid(row=1, column=0, sticky="news", padx=20, pady=10)
 registered_label = tkinter.Label(courses_frame, 
                                  text="Registration Status")
 registered_label.grid(row=0, column=0)
-reg_status_strvar = tkinter.StringVar(value="Not Registered")
+reg_status = tkinter.StringVar(value="Not Registered")
 registered_check = tkinter.Checkbutton(courses_frame, 
                                        text="Currently Registered",
-                                       variable=reg_status_strvar,
+                                       variable=reg_status,
                                        onvalue="Registered",
                                        offvalue="Not Registered")
 registered_check.grid(row=1, column=0)
 
-no_entry = tkinter.IntVar(value=0)
 numcourses_label = tkinter.Label(courses_frame, 
                                  text="# of Completed Courses")
 numcourses_label.grid(row=0,column=1)
 numcourses_spinbox = ttk.Spinbox(courses_frame, 
                                  from_=0, 
-                                 to='infinity',
-                                 textvariable=no_entry)
+                                 to='infinity')
 numcourses_spinbox.grid(row=1, column=1)
 
 numsemesters_label = tkinter.Label(courses_frame, 
@@ -131,8 +166,7 @@ numsemesters_label = tkinter.Label(courses_frame,
 numsemesters_label.grid(row=0, column=2)
 numsemesters_spinbox = ttk.Spinbox(courses_frame, 
                                    from_=0,
-                                   to=50,
-                                   textvariable=no_entry)
+                                   to=50)
 numsemesters_spinbox.grid(row=1, column=2)
 
 for widget in courses_frame.winfo_children():
