@@ -6,13 +6,13 @@ from tkinter import messagebox
 
 # Functions ---------------------------------------------------
 def enter_data():
-    accepted = conditions_var
+    accepted = conditions_var.get()
     
     if accepted == "Accepted":
         fname = fname_entry.get()
-        lname = lname_entry.get()
- 
-        if fname and lname :
+        lname = lname_entry.get()   
+
+        if fname and lname:       
             ntitle = name_title_combo.get()
             age = age_spinbox.get()
             nationality = nationality_combobox.get()
@@ -25,8 +25,11 @@ def enter_data():
             print("Title: ", ntitle, "Age: ", age, "Nationality: ", nationality)
             print("Registration Status: ", r_status, "# of Courses: ", courses, "# of Semesters: ", semesters)
             print("--------------------------------------------------------")
+
         else:
-            messagebox.showerror("Error","Error. Please fill in your first and last name.")
+            print("Error: First and last name not inputted.")
+            messagebox.showwarning("Error","Error. Please enter your first and last name.")
+
 
     else:
         print("Error: Terms & Conditions not accepted by user.")
