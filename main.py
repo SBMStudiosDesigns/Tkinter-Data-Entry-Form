@@ -11,21 +11,27 @@ def enter_data():
     if accepted == "Accepted":
         fname = fname_entry.get()
         lname = lname_entry.get()
-        ntitle = name_title_combo.get()
-        age = age_spinbox.get()
-        nationality = nationality_combobox.get()
-        courses = numcourses_spinbox.get()
-        semesters = numsemesters_spinbox.get()
-        r_status = reg_status_strvar.get()
+ 
+        if fname and lname :
+            ntitle = name_title_combo.get()
+            age = age_spinbox.get()
+            nationality = nationality_combobox.get()
+            courses = numcourses_spinbox.get()
+            semesters = numsemesters_spinbox.get()
+            r_status = reg_status_strvar.get()
 
 
-        print("First Name: ", fname, "Last Name: ", lname)
-        print("Title: ", ntitle, "Age: ", age, "Nationality: ", nationality)
-        print("Registration Status: ", r_status, "# of Courses: ", courses, "# of Semesters: ", semesters)
-        print("--------------------------------------------------------")
+            print("First Name: ", fname, "Last Name: ", lname)
+            print("Title: ", ntitle, "Age: ", age, "Nationality: ", nationality)
+            print("Registration Status: ", r_status, "# of Courses: ", courses, "# of Semesters: ", semesters)
+            print("--------------------------------------------------------")
+        else:
+            messagebox.showerror("Error","Error. Please fill in your first and last name.")
+
     else:
-        print("Incorrect/No data entered")
-        messagebox.showerror("showerror","Error. Enter data to display results")
+        print("Error: Terms & Conditions not accepted by user.")
+        messagebox.showerror("Error","Error. Please accept the terms & conditions to enter data.")
+
 
 # Window Initialized ----------------------------------------
 window = tkinter.Tk()
@@ -130,7 +136,7 @@ conditions_checkbox.grid(row=0, column=0)
 entry_btn = tkinter.Button(frame, text="Enter Data", command=enter_data)
 entry_btn.grid(row=3, column=0, sticky="news", padx=20, pady=10)
 
-exit_btn = tkinter.Button(frame, text="Cancel")
+exit_btn = tkinter.Button(frame, text="Cancel", command=window.destroy)
 exit_btn.grid(row=4, column=0, sticky="news", padx=20, pady=10)
 
 
